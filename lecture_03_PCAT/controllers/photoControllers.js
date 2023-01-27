@@ -1,6 +1,7 @@
 const Photo = require('../models/Photo');
 const fs = require('fs');
 
+//Pagination
 exports.getAllPhotos = async (req, res) => {
   const page = req.query.page || 1;
   const photosPerPage = 3;
