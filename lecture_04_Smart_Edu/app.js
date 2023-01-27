@@ -10,18 +10,21 @@ mongoose
   .connect('mongodb://localhost/smartedu-db', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // useFindAndModify: false,
-    userCreateIndex: true,
+    //useFindAndModify: false,
+    //useCreateIndex: true,
   })
   .then(() => {
-    console.log('DB connected successfully');
-  });
+    console.log('DB Connected Successfully');
+  })
+  .catch((err) => console.log(err));
 
 //Template Engine
 app.set('view engine', 'ejs');
 
 //Middlewares
 app.use(express.static('public'));
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 //Routes
 app.use('/', pageRoute);
