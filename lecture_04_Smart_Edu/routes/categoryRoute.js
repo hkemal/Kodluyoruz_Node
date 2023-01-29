@@ -3,8 +3,6 @@ const categoryController = require('../controllers/categoryController');
 
 const router = express.Router();
 
-router.route('/').post(categoryController.createCategory);
-// router.route('/').get(courseController.getAllCourses);
-// router.route('/:slug').get(courseController.getCourse);
+router.route('/signup').post(categoryController.createCategory);
 
 module.exports = router;
