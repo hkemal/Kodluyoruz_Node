@@ -20,12 +20,9 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
     let user = await User.findOne({ email });
     let same = await bcrypt.compare(password, user.password);
-    if (same) {
-      req.session.userID = user._id;
-      res.status(200).redirect('/users/dashboard');
-    } else {
-      res.send('Geçersiz');
-    }
+
+    req.session.userID = user._id;
+    res.status(200).redirect('/users/dashboard');
   } catch (error) {
     res.status(400).json({
       status: 'fail',
