@@ -1,10 +1,12 @@
 <%- include('partials/_header'); %> <%- include('partials/_navigation'); %> <%
 if(user) { %> <% if(user.role==='student' ) { %>
+
 <div class="all-title-box">
   <div class="container text-center">
     <h1><%= user.name %><span class="m_1">STUDENT</span></h1>
   </div>
 </div>
+
 <div id="overviews" class="section wb">
   <div class="container">
     <div class="row">
@@ -22,6 +24,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
     <!-- end row -->
     <div class="row mt-5">
       <% for (let i=0; i< user.courses.length; i++) { %>
+
       <div class="col-lg-6 col-md-6 col-12">
         <div class="course-item mb-5">
           <div class="image-blog">
@@ -30,7 +33,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
           <div class="course-br">
             <div class="course-title">
               <h2>
-                <a href="course-single.html" title=""
+                <a href="/courses/<%= user.courses[i].slug %>" title=""
                   ><%= user.courses[i].name %>
                 </a>
               </h2>
@@ -52,6 +55,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
         </div>
       </div>
       <!-- end col -->
+
       <% } %>
     </div>
     <!-- end row -->
@@ -59,12 +63,15 @@ if(user) { %> <% if(user.role==='student' ) { %>
   <!-- end container -->
 </div>
 <!-- end section -->
+
 <% } %> <% if(user.role==='teacher' ) { %>
+
 <div class="all-title-box">
   <div class="container text-center">
     <h1><%= user.name %><span class="m_1">TEACHER</span></h1>
   </div>
 </div>
+
 <div id="overviews" class="section wb">
   <div class="container">
     <div class="row">
@@ -74,6 +81,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
       <% } else if (flashMessages.error) { %>
       <div class="alert alert-danger"><%= flashMessages.error %></div>
       <% } %> <% } %>
+
       <!-- Modal Button -->
       <div class="col-lg-12 text-center">
         <button
@@ -85,6 +93,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
           <span>CREATE NEW COURSE</span>
         </button>
       </div>
+
       <div class="col-lg-12 blog-post-single">
         <div class="blog-author">
           <div class="author-bio">
@@ -138,6 +147,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
         </div>
       </div>
       <!-- end col -->
+
       <!-- UPDATE Modal -->
       <div
         class="modal fade"
@@ -181,6 +191,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
                         />
                       </div>
                     </div>
+
                     <div class="form-group">
                       <div class="col-sm-12">
                         <textarea
@@ -230,6 +241,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
           </div>
         </div>
       </div>
+
       <% } %>
     </div>
     <!-- end row -->
@@ -237,6 +249,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
   <!-- end container -->
 </div>
 <!-- end section -->
+
 <!-- ADD Modal -->
 <div
   class="modal fade"
@@ -272,6 +285,7 @@ if(user) { %> <% if(user.role==='student' ) { %>
                   />
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-12">
                   <textarea
@@ -319,4 +333,63 @@ if(user) { %> <% if(user.role==='student' ) { %>
     </div>
   </div>
 </div>
+
+<% } %> <% if(user.role==='admin' ) { %>
+
+<div class="all-title-box">
+  <div class="container text-center">
+    <h1><%= user.name %><span class="m_1">ADMIN</span></h1>
+  </div>
+</div>
+
+<div id="overviews" class="section wb">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 blog-post-single">
+        <div class="blog-author">
+          <div class="author-bio">
+            <h3 class="author_name">
+              <a href="#"> Courses Enrolled by: <%= user.name %></a>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+    <div class="row mt-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let i=0; i< users.length; i++) { %>
+          <tr>
+            <th scope="row"><%=users[i]._id %></th>
+            <td><%=users[i].email %></td>
+            <td><%=users[i].role %></td>
+            <td>
+              <a
+                href="/users/<%= users[i]._id %>?_method=DELETE"
+                onclick="return confirm('ARE YOU SURE')"
+                class="btn btn-danger rounded-0 text-white"
+                ><span>DELETE</span></a
+              >
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- end container -->
+</div>
+<!-- end section -->
+
 <% } %> <% } %> <%- include('partials/_footer'); %>
