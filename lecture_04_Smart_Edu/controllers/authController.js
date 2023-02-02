@@ -19,19 +19,21 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    let user = await User.findOne({ email });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (user) {
-      const { email, password } = req.body;
-      let same = await bcrypt.compare(password, user.password);
-      if (same) {
-        req.session.userID = user._id;
-        res.status(200).redirect('/users/dashboard');
-      } else {
-        req.flash('error', 'Your password is not correct!');
-        res.status(400).redirect('/login');
-      }
+      bcrypt.compare(password, user.password, (err, same) => {
+        if (same) {
+          // user session
+          req.session.userID = user._id;
+          res.status(200).redirect('/users/dashboard');
+        } else {
+          req.flash('error', 'Incorrect password!');
+          res.status(400).redirect('/login');
+        }
+      });
     } else {
-      req.flash('error', 'User is not exist!');
+      req.flash('error', 'User not found!');
       res.status(400).redirect('/login');
     }
   } catch (error) {
